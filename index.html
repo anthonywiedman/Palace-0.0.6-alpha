@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.ravenjs.com/3.19.1/raven.min.js" crossorigin="anonymous"></script>
+	<script>
+        Raven.config('https://2e2f7f94e86c471189b46bc12abcf6c9@sentry.pchat.palaceworld.net/2').install()
+	</script>
+</head>
+<body>
+	<audio id="soundplayer" autoplay></audio>
+	<div id="toolbar">
+		<button id="users" class="tbitem tbbutton" disabled></button>
+		<button id="rooms" class="tbitem tbbutton" disabled></button>
+		<button id="servers" class="tbitem tbbutton"></button>
+		<div class="tbitem tbseperator"></div>
+		<input id="drawcheckbox" type="checkbox" class="tbcheckbox">
+		<label id="drawing" class="tbitem tbbutton tbtoggle" for="drawcheckbox"></label>
+		<div id="drawcontrols" data-state=0 class="tbitem tbcontroller">
+			<input id="drawsize" class="tbcontrol" type="range" max="32" min="1" value=2>
+			<div id="drawtype" class="tbcontrol tbbutton"></div>
+			<div id="drawundo" class="tbcontrol tbbutton"></div>
+			<div id="drawcheckers">
+				<input type="color" id="drawcolor" class="tbcontrol colorcontrol">
+				<input type="color" id="drawfill" class="tbcontrol colorcontrol">
+			</div>
+			<canvas id="drawpreview" class="tbcontrol" width="66" height="36"></canvas>
+		</div>
+
+		<div id="palaceinfo">
+			<div id="palaceserver" class="palaceinfo" value="" tabindex="-1" spellcheck="false" contenteditable>
+			</div>
+			<div id="palaceroom" class="palaceinfo"></div>
+			<div id="muteaudio" class="tbitem tbbutton"></div>
+		</div>
+
+		<input id="prefscheckbox" type="checkbox" class="tbcheckbox">
+		<label id="preferences" class="tbitem tbbutton tbtoggle tbright" for="prefscheckbox"></label>
+
+		<div class="tbitem tbseperator tbright"></div>
+
+		<input id="chatlogcheckbox" type="checkbox" class="tbcheckbox" checked>
+		<label id="chatlog" class="tbitem tbbutton tbtoggle tbright" for="chatlogcheckbox"></label>
+		<input id="propbagcheckbox" type="checkbox" class="tbcheckbox">
+		<label id="propbag" class="tbitem tbbutton tbtoggle tbright" for="propbagcheckbox"></label>
+		<div id="propcontrols" data-state=0 class="tbitem tbcontroller tbright">
+			<button id="editprop" class="tbcontrol tbbutton" disabled></button>
+			<button id="removeprops" class="tbcontrol tbbutton" disabled></button>
+			<label id="newprops" for="fileprops" class="tbcontrol tbbutton">
+				<input id="fileprops" class="fileselect" type="file" name="file" multiple>
+			</label>
+			<button id="deleteprops" class="tbcontrol tbbutton" disabled></button>
+		</div>
+		<button id="saveprop" class="tbitem tbbutton tbright" disabled></button>
+
+		<div id="log" class="sidepanel" data-state=1></div>
+		<div id="props" class="sidepanel" data-state=0>
+			<p id="propbagretainer"></p>
+		</div>
+
+		<div id="navframe" class="navframe">
+			<input type="text" id="navsearch" value="" autocomplete="off" spellcheck="false">
+			<ul id="navlistbox"></ul>
+		</div>
+
+
+		<label id="smileyfaces" for="smileypickertoggle"></label>
+		<div id="smileypicker" class="zoompanel" data-state=0>
+			<div id="smileycolorpicker"></div>
+		</div>
+
+		<div id="prefs" class="zoompanel" data-state=0>
+			<label class="preflabel" for="prefusername">Your Name:</label>
+			<input id="prefusername" type="text" class="prefinput">
+			<label class="preflabel" for="prefhomepalace">Home:</label>
+			<input id="prefhomepalace" type="text" class="prefinput">
+			<label class="preflabel" for="prefpropbagsize">Prop bag tile size:</label>
+			<input id="prefpropbagsize" type="range" class="prefinput" type="range" max="224" min="48" value=91>
+			<label class="preflabel" for="prefviewfitscale">Don't scale view:</label>
+			<input id="prefviewfitscale" type="checkbox" class="prefinput">
+			<label class="preflabel" for="prefviewscaleall">Always scale view:</label>
+			<input id="prefviewscaleall" type="checkbox" class="prefinput" checked>
+			<label class="preflabel" for="prefdisablesounds">Disable sounds:</label>
+			<input id="prefdisablesounds" type="checkbox" class="prefinput">
+			<label class="preflabel" for="prefautoplayvideos">Autoplay log videos:</label>
+			<input id="prefautoplayvideos" type="checkbox" class="prefinput">
+			<label class="preflabel" for="senddebug">Automatic error reporting:</label>
+			<input id="senddebug" type="checkbox" class="prefinput" checked>
+		</div>
+
+		<div id="authenticate" class="zoompanel" data-state=0>
+			<input id="authusername" type="text" class="authinput" placeholder="Name" spellcheck="false">
+			<input id="authpassword" type="text" class="authinput" placeholder="Password" spellcheck="false">
+			<button id="submitauthenticate">Submit</button>
+		</div>
+	</div>
+	<div id="container">
+		<video id="videobg" autoplay loop></video>
+		<div id="background"></div>
+		<canvas id="mainlayer"></canvas>
+		<canvas id="toplayer"></canvas>
+	</div>
+	<input type="text" id="chatbox" placeholder="Chat..." autofocus>
+</body>
+<script src="js/lib/pako.min.js"></script>
+<script src="js/lib/UPNG.js"></script>
+<script src="js/lib/encoding-indexes.js"></script>
+<script src="js/lib/encoding.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/utility.js"></script>
+<script src="js/interface.js"></script>
+<script src="js/props.js"></script>
+<script src="js/preferences.js"></script>
+<script src="js/bubbles.js"></script>
+<script src="js/users.js"></script>
+<script src="js/client.js"></script>
+<script src="js/core.js"></script>
+</html>
